@@ -1,4 +1,4 @@
-package in.thelosergeek.hackathon_app;
+package in.thelosergeek.community_app;
 
 import android.content.Context;
 

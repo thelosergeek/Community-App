@@ -1,23 +1,35 @@
-package in.thelosergeek.hackathon_app;
+package in.thelosergeek.community_app;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+import in.thelosergeek.community_app.fragments.ChatsFragment;
+import in.thelosergeek.community_app.fragments.PostFragment;
+import in.thelosergeek.community_app.fragments.SearchFragment;
+import in.thelosergeek.community_app.ui.LoginActivity;
+import in.thelosergeek.community_app.ui.ProfileActivity;
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ViewPager viewPager;
     private TabLayout tabLayout;
@@ -25,8 +37,14 @@ public class MainActivity extends AppCompatActivity {
     private PostFragment postFragment;
     private ChatsFragment chatsFragment;
     private SearchFragment searchFragment;
-    
-    
+
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+
+    private FirebaseAuth mAuth;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +56,12 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager = findViewById(R.id.view_pager);
         tabLayout = findViewById(R.id.tab_layout);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+
+        mAuth = FirebaseAuth.getInstance();
+
 
         postFragment = new PostFragment();
         chatsFragment = new ChatsFragment();
@@ -57,6 +81,39 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(1).setIcon(R.drawable.chat);
         tabLayout.getTabAt(2).setIcon(R.drawable.search);
 
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
+                this,
+                drawerLayout,
+                toolbar,
+                R.string.openNavDrawer,
+                R.string.closeNavDrawer
+        );
+
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
+
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item)
+    {
+        switch (item.getItemId()){
+            case R.id.settings:
+                Intent intent= new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.logout:
+                FirebaseAuth.getInstance().signOut();
+                UpdateUI();
+                break;
+
+        }
+        return true;
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
 
@@ -94,6 +151,23 @@ public class MainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return fragmentTitle.get(position);
         }
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if(currentUser == null)
+        {
+            UpdateUI();
+
+        }
+    }
+    private void UpdateUI() {
+        Intent startIntent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(startIntent);
+        finish();
     }
 }
 
