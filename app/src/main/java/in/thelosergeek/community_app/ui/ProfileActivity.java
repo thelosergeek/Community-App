@@ -18,10 +18,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,16 +35,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
-import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.util.HashMap;
-import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import in.thelosergeek.community_app.R;
@@ -89,7 +82,7 @@ public class ProfileActivity extends AppCompatActivity {
         d_image = findViewById(R.id.tvphoto);
         d_name = (TextView) findViewById(R.id.tvname);
         d_email = (TextView) findViewById(R.id.tvemail);
-        d_designation = findViewById(R.id.tvdesignation);
+        //d_designation = findViewById(R.id.tvdesignation);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.btnchange);
         progressDialog = new ProgressDialog(this);
 
@@ -99,7 +92,7 @@ public class ProfileActivity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference().child("Users");
         storageReference = getInstance().getReference();
-
+        databaseReference.keepSynced(true);
 
         cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -159,7 +152,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void requestCameraPermission() {
-        ActivityCompat.requestPermissions(this, storagePermission, STORAGE_CODE);
+        ActivityCompat.requestPermissions(this, cameraPermission, CAMERA_CODE);
     }
 
     @Override
@@ -360,7 +353,7 @@ public class ProfileActivity extends AppCompatActivity {
             break;
             case STORAGE_CODE:{
                 if(grantResults.length>0){
-                    boolean writeStorageAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    boolean writeStorageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
                     if(writeStorageAccepted){
                         PickFromGallery();
                     }
@@ -374,7 +367,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    private void PickFromGallery() {
+    private void PickFromCamera() {
 
         ContentValues contentValues = new ContentValues();
         contentValues.put(MediaStore.Images.Media.TITLE,"TEMP PIC");
@@ -386,7 +379,7 @@ public class ProfileActivity extends AppCompatActivity {
         startActivityForResult(intent, IMAGE_PICK_CAMERA);
     }
 
-    private void PickFromCamera() {
+    private void PickFromGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent, IMAGE_PICK_GALLERY);
@@ -394,4 +387,20 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
 
+   private  void checkLoginntatus(){
+        firebaseUser = firebaseAuth.getCurrentUser();
+        if(firebaseUser!= null){
+
+        }
+        else{
+            startActivity(new Intent(ProfileActivity.this,LoginActivity.class));
+            finish();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        checkLoginntatus();
+        super.onStart();
+    }
 }
