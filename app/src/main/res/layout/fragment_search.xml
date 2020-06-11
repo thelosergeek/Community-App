@@ -5,12 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".fragments.SearchFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="This is search fragment. This will show all employees"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp" />
+        android:layout_height="match_parent"/>
+
 
 </FrameLayout>
