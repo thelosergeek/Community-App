@@ -1,6 +1,7 @@
 package in.thelosergeek.community_app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.MyHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int o) {
-
+        final String senderUID = userList.get(o).getUid();
         String userImage = userList.get(o).getImage();
         String userName = userList.get(o).getName();
         final String userEmail = userList.get(o).getEmail();
@@ -53,7 +54,9 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.MyHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context,""+ userEmail,Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, ActivityChat.class );
+                intent.putExtra("senderUID", senderUID);
+                context.startActivity(intent);
             }
         });
     }
