@@ -1,4 +1,4 @@
-package in.thelosergeek.community_app;
+package in.thelosergeek.community_app.Models;
 
 public class ChatModel {
     String message, receiver, sender;

@@ -29,12 +29,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import in.thelosergeek.community_app.MainActivity;
 import in.thelosergeek.community_app.R;
-import in.thelosergeek.community_app.UserModel;
-import in.thelosergeek.community_app.UsersAdapter;
+import in.thelosergeek.community_app.Models.UserModel;
+import in.thelosergeek.community_app.Adapters.UsersAdapter;
 import in.thelosergeek.community_app.ui.LoginActivity;
-import in.thelosergeek.community_app.ui.ProfileActivity;
 
 
 public class SearchFragment extends Fragment {

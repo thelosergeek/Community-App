@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +33,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import in.thelosergeek.community_app.ui.LoginActivity;
+import in.thelosergeek.community_app.Adapters.ChatAdapter;
+import in.thelosergeek.community_app.Models.ChatModel;
 
 public class ActivityChat extends AppCompatActivity {
 

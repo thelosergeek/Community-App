@@ -14,17 +14,18 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.WindowManager;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import in.thelosergeek.community_app.fragments.ChatsFragment;
+import in.thelosergeek.community_app.firebasemessagingservice.Token;
 import in.thelosergeek.community_app.fragments.PostFragment;
 import in.thelosergeek.community_app.fragments.SearchFragment;
 import in.thelosergeek.community_app.ui.LoginActivity;
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView navigationView;
 
     private FirebaseAuth mAuth;
+
+    String mUID;
 
 
 
@@ -97,6 +100,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    public void updateToken(String token){
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Tokens");
+        Token mtoken = new Token(token);
+        ref.child(mUID).setValue(mtoken);
+
+
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item)
     {
@@ -107,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
-                UpdateUI();
+                checkUserStatus();
                 break;
 
         }
@@ -157,19 +168,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onStart() {
         super.onStart();
+
+
+        checkUserStatus();
+    }
+    private void checkUserStatus() {
+
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        if(currentUser == null)
-        {
-            UpdateUI();
+        if(currentUser != null) {
 
+            mUID = currentUser.getUid();
         }
-    }
-    private void UpdateUI() {
+        else {
+        }
+
+
         Intent startIntent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(startIntent);
         finish();
     }
 }
 
+//21:10
