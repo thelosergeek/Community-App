@@ -11,12 +11,5 @@
             android:id="@+id/logout"
         android:title="Logout" android:icon="@drawable/chat"/>
 
-    <item
-        android:id="@+id/search"
-        android:icon="@drawable/search"
-        android:title="Search"
-        app:showAsAction="always"
-        app:actionViewClass="android.widget.SearchView" />
-
 
 </menu>

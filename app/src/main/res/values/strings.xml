@@ -7,4 +7,6 @@
     <string name="openNavDrawer">Navigation Drawer Open</string>
 
     <string name="closeNavDrawer">Navigation Drawer Close</string>
+    <string name="last_seen">Last Seen</string>
+    <string name="name">Name</string>
 </resources>

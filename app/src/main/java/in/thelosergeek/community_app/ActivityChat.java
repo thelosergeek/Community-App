@@ -35,6 +35,7 @@ import java.util.List;
 
 import in.thelosergeek.community_app.Adapters.ChatAdapter;
 import in.thelosergeek.community_app.Models.ChatModel;
+import in.thelosergeek.community_app.ui.ProfileActivity;
 
 public class ActivityChat extends AppCompatActivity {
 
@@ -197,8 +198,7 @@ public class ActivityChat extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.top_app_bar,menu);
-        menu.findItem(R.id.search).setVisible(false);
+        getMenuInflater().inflate(R.menu.info,menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -206,9 +206,9 @@ public class ActivityChat extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         int id = item.getItemId();
-        if(id== R.id.logout){
-            FirebaseAuth.getInstance().signOut();
-            checkUserStatus();
+        if(id== R.id.info){
+            startActivity(new Intent(ActivityChat.this, ProfileActivity.class));   // direct to user's profile
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
