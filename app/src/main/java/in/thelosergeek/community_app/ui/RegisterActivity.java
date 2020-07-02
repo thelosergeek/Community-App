@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -102,7 +100,6 @@ public class RegisterActivity extends AppCompatActivity {
 
                             String email = user.getEmail();
                             String uid = user.getUid();
-
 
                             HashMap<Object, String> hashMap = new HashMap<>();
                             hashMap.put("email",email);

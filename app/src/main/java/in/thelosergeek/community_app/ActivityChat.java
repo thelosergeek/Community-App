@@ -180,10 +180,7 @@ public class ActivityChat extends AppCompatActivity {
     private void checkUserStatus() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser!=null) {
-
             receiverUID = currentUser.getUid();
-
-
         }
         else{
           startActivity(new Intent(this, MainActivity.class));

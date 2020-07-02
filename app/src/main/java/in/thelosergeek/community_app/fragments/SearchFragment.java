@@ -129,9 +129,9 @@ public class SearchFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.top_app_bar,menu);
+        inflater.inflate(R.menu.searchmenu,menu);
 
-        /*MenuItem item = menu.findItem(R.id.search);
+        MenuItem item = menu.findItem(R.id.search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -148,10 +148,19 @@ public class SearchFragment extends Fragment {
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
+            public boolean onQueryTextChange(String query) {
+
+                if(!TextUtils.isEmpty(query.trim())){
+
+                    searchUsers(query);
+                }
+                else
+                {
+                    getAllUsers();
+                }
                 return false;
             }
-        });*/
+        });
 
         super.onCreateOptionsMenu(menu, inflater);
     }

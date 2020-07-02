@@ -105,11 +105,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        if(id== R.id.app_bar_search){
-            startActivity(new Intent(MainActivity.this, ProfileActivity.class));   // direct to user's profile
-            
-        }
+
         return super.onOptionsItemSelected(item);
     }
 

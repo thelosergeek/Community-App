@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
         tools:replace="android:icon,android:theme">
-        <activity android:name=".ActivityChat"></activity>
+        <activity android:name=".HomeActivity"></activity>
+        <activity android:name=".ActivityChat" />
         <activity android:name=".ui.ProfileActivity" />
         <activity android:name=".ui.RegisterActivity" />
         <activity android:name=".ui.LoginActivity" />
