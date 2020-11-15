@@ -15,7 +15,7 @@
         android:layout_marginTop="56dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/clip" />
+        app:srcCompat="@drawable/abc_vector_test" />
 
     <TextView
         android:id="@+id/textView"
